@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 class Book {
@@ -21,21 +21,33 @@ public:
         loadFromFile();
     }
 
+    bool bookExists(const string &title) {
+        for (const auto &book : books) {
+            if (book.title == title) return true;
+        }
+        return false;
+    }
+
     void addBook() {
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         string title, author;
-        cin.ignore();
         cout << "Enter book title: ";
         getline(cin, title);
-        cout << "Enter book author: ";
+        cout << "Enter author name: ";
         getline(cin, author);
-        books.push_back(Book(title, author, false));
-        saveToFile();
-        cout << "Book added successfully!\n";
+
+        if (bookExists(title)) {
+            cout << "Book \"" << title << "\" already exists in inventory.\n";
+        } else {
+            books.push_back(Book(title, author));
+            saveToFile();
+            cout << "Book \"" << title << "\" added successfully.\n";
+        }
     }
 
     void issueBook() {
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         string title;
-        cin.ignore();
         cout << "Enter book title to issue: ";
         getline(cin, title);
 
@@ -55,8 +67,8 @@ public:
     }
 
     void returnBook() {
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         string title;
-        cin.ignore();
         cout << "Enter book title to return: ";
         getline(cin, title);
 
